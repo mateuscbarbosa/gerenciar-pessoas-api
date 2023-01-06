@@ -23,7 +23,7 @@ import lombok.Setter;
 @Entity
 @Table(name = "people")
 public class Person {
-
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
