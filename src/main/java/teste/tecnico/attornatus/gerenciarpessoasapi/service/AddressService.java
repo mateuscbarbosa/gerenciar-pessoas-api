@@ -2,8 +2,6 @@ package teste.tecnico.attornatus.gerenciarpessoasapi.service;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import jakarta.persistence.EntityNotFoundException;
@@ -27,11 +25,6 @@ public class AddressService {
 	@Autowired
 	private ModelMapper modelMapper;
 	
-	public Page<AddressOutputDto> list(Pageable pagination) {
-		Page<Address> addresses = addressRepository.findAll(pagination);
-		return addresses.map(a -> modelMapper.map(a, AddressOutputDto.class));
-	}
-
 	@Transactional
 	public AddressOutputDto register(AddressFormDto addressForm) {
 		Person person = findPerson(addressForm.getPersonId());
