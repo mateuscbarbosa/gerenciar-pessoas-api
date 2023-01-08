@@ -6,7 +6,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
+import teste.tecnico.attornatus.gerenciarpessoasapi.dto.person.DetailedPersonOutputDto;
 import teste.tecnico.attornatus.gerenciarpessoasapi.dto.person.PersonFormDto;
 import teste.tecnico.attornatus.gerenciarpessoasapi.dto.person.PersonOutputDto;
 import teste.tecnico.attornatus.gerenciarpessoasapi.model.Person;
@@ -26,6 +28,12 @@ public class PersonService {
 		return people.map(p -> modelMapper.map(p, PersonOutputDto.class));
 	}
 
+	public DetailedPersonOutputDto detailed(Long id) {
+		Person person = personRepository.findById(id).orElseThrow(() -> new EntityNotFoundException());
+		
+		return modelMapper.map(person, DetailedPersonOutputDto.class);
+	}
+	
 	@Transactional
 	public PersonOutputDto register(PersonFormDto personForm) {
 		Person person = modelMapper.map(personForm, Person.class);
@@ -35,5 +43,6 @@ public class PersonService {
 		
 		return modelMapper.map(person, PersonOutputDto.class);
 	}
+
 
 }

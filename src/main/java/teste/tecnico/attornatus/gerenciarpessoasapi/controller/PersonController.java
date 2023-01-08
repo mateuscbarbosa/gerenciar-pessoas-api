@@ -7,6 +7,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,6 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
+import teste.tecnico.attornatus.gerenciarpessoasapi.dto.person.DetailedPersonOutputDto;
 import teste.tecnico.attornatus.gerenciarpessoasapi.dto.person.PersonFormDto;
 import teste.tecnico.attornatus.gerenciarpessoasapi.dto.person.PersonOutputDto;
 import teste.tecnico.attornatus.gerenciarpessoasapi.service.PersonService;
@@ -28,6 +31,13 @@ public class PersonController {
 	@GetMapping
 	public Page<PersonOutputDto> list(Pageable pagination){
 		return service.list(pagination);
+	}
+	
+	@GetMapping("/{id}")
+	public ResponseEntity<DetailedPersonOutputDto> detalied(@PathVariable @NotNull Long id){
+		DetailedPersonOutputDto dto = service.detailed(id);
+		
+		return ResponseEntity.ok(dto);
 	}
 	
 	@PostMapping
