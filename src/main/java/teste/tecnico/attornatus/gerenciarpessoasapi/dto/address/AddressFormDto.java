@@ -34,8 +34,4 @@ public class AddressFormDto {
 	@NotBlank
 	@JsonAlias("cidade")
 	private String city;
-	
-	@NotNull
-	@JsonAlias("principal")
-	private Boolean mainAddress;
 }

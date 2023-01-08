@@ -1,5 +1,7 @@
 package teste.tecnico.attornatus.gerenciarpessoasapi.service;
 
+import java.util.List;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,6 +33,7 @@ public class AddressService {
 		
 		Address address = modelMapper.map(addressForm, Address.class);
 		address.setId(null);
+		address.setMainAddress(false);
 		addressRepository.save(address);
 		
 		person.addAddress(address);
@@ -41,6 +44,25 @@ public class AddressService {
 
 	private Person findPerson(Long personId) {
 		return personRepository.findById(personId).orElseThrow(() -> new EntityNotFoundException());
+	}
+
+	@Transactional
+	public AddressOutputDto mainAddressUpdate(Long id) {
+		Address address = addressRepository.findById(id).orElseThrow(() -> new EntityNotFoundException());
+		
+		address.setMainAddress(true);
+		addressRepository.save(address);
+		
+		List<Address> addresses = addressRepository.findAllByPersonId(address.getPerson().getId());
+		
+		for (Address addressFound : addresses) {
+			if(!addressFound.getId().equals(address.getId())) {
+				addressFound.setMainAddress(false);
+				addressRepository.save(addressFound);
+			}
+		}
+		
+		return modelMapper.map(address, AddressOutputDto.class);
 	}
 
 	
