@@ -18,6 +18,7 @@ import jakarta.persistence.EntityNotFoundException;
 import teste.tecnico.attornatus.gerenciarpessoasapi.dto.person.DetailedPersonOutputDto;
 import teste.tecnico.attornatus.gerenciarpessoasapi.dto.person.PersonFormDto;
 import teste.tecnico.attornatus.gerenciarpessoasapi.dto.person.PersonOutputDto;
+import teste.tecnico.attornatus.gerenciarpessoasapi.dto.person.PersonUpdateFormDto;
 import teste.tecnico.attornatus.gerenciarpessoasapi.model.Person;
 import teste.tecnico.attornatus.gerenciarpessoasapi.repository.PersonRepository;
 
@@ -76,5 +77,35 @@ class PersonServiceTest {
 		
 		assertEquals(formDto.getName(), dto.getName());
 		assertEquals(formDto.getBirthDate(), dto.getBirthDate());
+	}
+	
+	@Test
+	void shouldNotUpdateAPersonWithWrongId() {
+		PersonUpdateFormDto personUpdate = new PersonUpdateFormDto(10l, "Pessoa Teste", LocalDate.now());
+		
+		Mockito.when(personRepository.findById(personUpdate.getId())).thenThrow(EntityNotFoundException.class);
+		
+		assertThrows(EntityNotFoundException.class, () -> service.update(personUpdate));
+	}
+	
+	@Test
+	void shouldUpdateAPersonWithCorrectId(){
+		PersonUpdateFormDto personUpdate = new PersonUpdateFormDto(10l, "Pessoa Teste 1", LocalDate.now());
+		
+		Person person = new Person(personUpdate.getId(), "Pessoa Teste", personUpdate.getBirthDate(), null);
+		
+		Mockito.when(personRepository.findById(personUpdate.getId())).thenReturn(Optional.of(person));
+		
+		Mockito.when(modelMapper.map(person, PersonOutputDto.class))
+					.thenReturn(new PersonOutputDto(person.getId(),
+													personUpdate.getName(),
+													person.getBirthDate()));
+		
+		PersonOutputDto dto = service.update(personUpdate);
+		
+		//Mockito.verify(personRepository).save(Mockito.any());
+		
+		assertEquals(dto.getName(), personUpdate.getName());
+		assertEquals(dto.getBirthDate(), personUpdate.getBirthDate());
 	}
 }

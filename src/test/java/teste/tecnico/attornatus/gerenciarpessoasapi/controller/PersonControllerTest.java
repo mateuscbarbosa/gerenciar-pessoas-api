@@ -18,6 +18,9 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 import jakarta.transaction.Transactional;
 import teste.tecnico.attornatus.gerenciarpessoasapi.dto.person.PersonFormDto;
+import teste.tecnico.attornatus.gerenciarpessoasapi.dto.person.PersonUpdateFormDto;
+import teste.tecnico.attornatus.gerenciarpessoasapi.model.Person;
+import teste.tecnico.attornatus.gerenciarpessoasapi.repository.PersonRepository;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -27,6 +30,9 @@ class PersonControllerTest {
 
 	@Autowired
 	private MockMvc mvc;
+	
+	@Autowired
+	private PersonRepository personRepository;
 	
 	private ObjectMapper objectMapper = new ObjectMapper();
 	
@@ -57,9 +63,9 @@ class PersonControllerTest {
 	
 	@Test
 	void shouldRegisterAPersonWithCompleteData() throws Exception {
-		configureObjectMapperToWriteDateAsString();
 		PersonFormDto formDto = new PersonFormDto("Pessoa Teste", LocalDate.now());
 		
+		configureObjectMapperToWriteDateAsString();
 		String json = objectMapper.writeValueAsString(formDto);
 		String expectedJson = "{\"name\": \"Pessoa Teste\", \"birthDate\":"+LocalDate.now().toString()+"}";
 		
@@ -68,6 +74,39 @@ class PersonControllerTest {
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(json))
 			.andExpect(MockMvcResultMatchers.status().isCreated())
+			.andExpect(MockMvcResultMatchers.content().json(expectedJson));
+	}
+	
+	@Test
+	void shouldNotUpdateAPersonWithWrongId() throws Exception{		
+		PersonUpdateFormDto updateForm = new PersonUpdateFormDto(99999l, "Pessoa Teste", LocalDate.now());
+		
+		configureObjectMapperToWriteDateAsString();
+		String json = objectMapper.writeValueAsString(updateForm);
+		
+		mvc.perform(MockMvcRequestBuilders
+					.put("/people")
+					.contentType(MediaType.APPLICATION_JSON)
+					.content(json))
+			.andExpect(MockMvcResultMatchers.status().isNotFound());
+	}
+	
+	@Test
+	void shouldUpdateAPerson() throws Exception{
+		Person person = new Person("Pessoa Teste", LocalDate.now());
+		Person savedPerson = personRepository.save(person);
+		
+		PersonUpdateFormDto personUpdate = new PersonUpdateFormDto(savedPerson.getId(), "Pessoa Teste 90", LocalDate.now());
+		
+		configureObjectMapperToWriteDateAsString();
+		String json = objectMapper.writeValueAsString(personUpdate);
+		String expectedJson = "{\"name\": \"Pessoa Teste 90\", \"birthDate\":"+LocalDate.now().toString()+"}";
+		
+		mvc.perform(MockMvcRequestBuilders
+					.put("/people")
+					.contentType(MediaType.APPLICATION_JSON)
+					.content(json))
+			.andExpect(MockMvcResultMatchers.status().isOk())
 			.andExpect(MockMvcResultMatchers.content().json(expectedJson));
 	}
 }

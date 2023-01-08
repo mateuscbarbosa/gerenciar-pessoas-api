@@ -18,7 +18,7 @@ public class PersonUpdateFormDto extends PersonFormDto{
 	private Long id;
 	
 	public PersonUpdateFormDto(Long id, String name, LocalDate birthDate) {
-		super();
+		super(name,birthDate);
 		this.id = id;
 	}
 }
