@@ -13,25 +13,25 @@ O projeto desenvolvido a seguir tem como objetivo cumprir os requisitos para o t
 
 <a name="requisitos-propostos"></a>
 ## Requisitos Propostos
--[x] Criar uma pessoa
+- [x] Criar uma pessoa
 > Utilizando uma requisição POST para o cadastro;
 `localhost:8080/people`
--[x] Editar uma pessoa
+- [x] Editar uma pessoa
 > Utilizando uma requisição PUT para a atualização de pessoa existente;
 `localhost:8080/people`
--[x] Consultar uma pessoa
+- [x] Consultar uma pessoa
 > Utilizando uma requisição GET com o ID para visualizar uma pessoa;
 `localhost:8080/people/{ID}`
--[x] Listar pessoas
+- [x] Listar pessoas
 > Utilizando uma requisição GET pode-se visualizar todas as pessoas cadastradas no sistema;
 `localhost:8080/people`
--[x] Criar endereço para pessoa
+- [x] Criar endereço para pessoa
 > Utilizando uma requisição POST para o cadastro do Endereço e informar também o ID da Pessoa de quem é o endereço;
 `localhost:8080/address`
--[x] Listar endereços da pessoa
+- [x] Listar endereços da pessoa
 > Utilizando uma requisição GET com o ID da Pessoa é possível observar todos os endereços dela;
 `localhost:8080/people/{ID}`
--[x] Poder informar qual endereço é o principal da pessoa
+- [x] Poder informar qual endereço é o principal da pessoa
 > Utilizando uma requisição PUT para a atualização de um endereço passando o ID do endereço já cadastrado ele ficará como principal, e todos os outros serão alterados automaticamente para não principais;
 `localhost:8080/address/{ID}I`
 
