@@ -11,6 +11,7 @@ import jakarta.transaction.Transactional;
 import teste.tecnico.attornatus.gerenciarpessoasapi.dto.person.DetailedPersonOutputDto;
 import teste.tecnico.attornatus.gerenciarpessoasapi.dto.person.PersonFormDto;
 import teste.tecnico.attornatus.gerenciarpessoasapi.dto.person.PersonOutputDto;
+import teste.tecnico.attornatus.gerenciarpessoasapi.dto.person.PersonUpdateFormDto;
 import teste.tecnico.attornatus.gerenciarpessoasapi.model.Person;
 import teste.tecnico.attornatus.gerenciarpessoasapi.repository.PersonRepository;
 
@@ -40,6 +41,15 @@ public class PersonService {
 		
 		person.setId(null);
 		personRepository.save(person);
+		
+		return modelMapper.map(person, PersonOutputDto.class);
+	}
+
+	@Transactional
+	public PersonOutputDto update(PersonUpdateFormDto personUpdate) {
+		Person person = personRepository.findById(personUpdate.getId()).orElseThrow(() -> new EntityNotFoundException());
+		
+		person.updateData(personUpdate.getName(), personUpdate.getBirthDate());
 		
 		return modelMapper.map(person, PersonOutputDto.class);
 	}

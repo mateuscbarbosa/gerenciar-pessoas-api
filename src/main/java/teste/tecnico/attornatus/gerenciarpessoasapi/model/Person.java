@@ -32,4 +32,9 @@ public class Person {
 	
 	@OneToMany
 	private List<Address> addresses = new ArrayList<>();
+	
+	public void updateData(String name, LocalDate birthDate) {
+		this.name = name;
+		this.birthDate = birthDate;
+	}
 }
