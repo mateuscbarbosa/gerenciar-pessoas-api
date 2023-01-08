@@ -49,7 +49,7 @@ class PersonServiceTest {
 			.thenReturn(new DetailedPersonOutputDto(person.getId(),
 													person.getName(),
 													person.getBirthDate(),
-													person.getAddresses()));
+													null));
 		
 		DetailedPersonOutputDto dto = service.detailed(person.getId());
 		
@@ -102,9 +102,7 @@ class PersonServiceTest {
 													person.getBirthDate()));
 		
 		PersonOutputDto dto = service.update(personUpdate);
-		
-		//Mockito.verify(personRepository).save(Mockito.any());
-		
+				
 		assertEquals(dto.getName(), personUpdate.getName());
 		assertEquals(dto.getBirthDate(), personUpdate.getBirthDate());
 	}

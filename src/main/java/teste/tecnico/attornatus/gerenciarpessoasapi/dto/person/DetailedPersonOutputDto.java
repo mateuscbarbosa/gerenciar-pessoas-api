@@ -7,7 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import teste.tecnico.attornatus.gerenciarpessoasapi.model.Address;
+import teste.tecnico.attornatus.gerenciarpessoasapi.dto.address.AddressOutputDto;
 
 @Getter
 @Setter
@@ -15,9 +15,9 @@ import teste.tecnico.attornatus.gerenciarpessoasapi.model.Address;
 @NoArgsConstructor
 public class DetailedPersonOutputDto extends PersonOutputDto{
 
-	private List<Address> addresses;
+	private List<AddressOutputDto> addresses;
 	
-	public DetailedPersonOutputDto(Long id, String name, LocalDate birthDate, List<Address> addresses) {
+	public DetailedPersonOutputDto(Long id, String name, LocalDate birthDate, List<AddressOutputDto> addresses) {
 		super(id, name, birthDate);
 		this.addresses = addresses;
 	}

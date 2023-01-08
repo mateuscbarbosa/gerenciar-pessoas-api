@@ -42,4 +42,8 @@ public class Person {
 		this.name = name;
 		this.birthDate = birthDate;
 	}
+	
+	public void addAddress(Address address) {
+		this.addresses.add(address);
+	}
 }
