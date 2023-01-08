@@ -16,6 +16,8 @@ import org.modelmapper.ModelMapper;
 
 import jakarta.persistence.EntityNotFoundException;
 import teste.tecnico.attornatus.gerenciarpessoasapi.dto.person.DetailedPersonOutputDto;
+import teste.tecnico.attornatus.gerenciarpessoasapi.dto.person.PersonFormDto;
+import teste.tecnico.attornatus.gerenciarpessoasapi.dto.person.PersonOutputDto;
 import teste.tecnico.attornatus.gerenciarpessoasapi.model.Person;
 import teste.tecnico.attornatus.gerenciarpessoasapi.repository.PersonRepository;
 
@@ -50,9 +52,29 @@ class PersonServiceTest {
 		
 		DetailedPersonOutputDto dto = service.detailed(person.getId());
 		
-		assertEquals(dto.getId(), person.getId());
-		assertEquals(dto.getName(), person.getName());
-		assertEquals(dto.getBirthDate(), person.getBirthDate());
+		assertEquals(person.getId(), dto.getId());
+		assertEquals(person.getName(), dto.getName());
+		assertEquals(person.getBirthDate(), dto.getBirthDate());
 	}
 
+	@Test
+	void shouldRegisterAPerson() {
+		PersonFormDto formDto = new PersonFormDto("Pessoa Teste", LocalDate.now());
+		
+		Person person = new Person(null, formDto.getName(), formDto.getBirthDate(), null);
+		
+		Mockito.when(modelMapper.map(formDto, Person.class)).thenReturn(person);
+		
+		Mockito.when(modelMapper.map(person, PersonOutputDto.class))
+			.thenReturn(new PersonOutputDto(person.getId(),
+											person.getName(),
+											person.getBirthDate()));
+		
+		PersonOutputDto dto = service.register(formDto);
+		
+		Mockito.verify(personRepository).save(Mockito.any());
+		
+		assertEquals(formDto.getName(), dto.getName());
+		assertEquals(formDto.getBirthDate(), dto.getBirthDate());
+	}
 }
