@@ -52,6 +52,7 @@ Todos os requisitos propostos foram satisfeitos.
 
 ### Diferenciais
 `Testes` - Tentei cobrir todos os métodos solicitados com testes unitários;
+
 `Clean Code` - Tentei ao máximo deixar o código limpo e organizado, e optei por fazê-lo em inglês para treinar;
 
 <a name="conclusao"></a>
