@@ -33,6 +33,31 @@ O projeto desenvolvido a seguir tem como objetivo cumprir os requisitos para o t
 `localhost:8080/people/{ID}`
 - [x] Poder informar qual endereço é o principal da pessoa
 > Utilizando uma requisição PUT para a atualização de um endereço passando o ID do endereço já cadastrado ele ficará como principal, e todos os outros serão alterados automaticamente para não principais;
-`localhost:8080/address/{ID}I`
+`localhost:8080/address/{ID}`
+Todos os requisitos propostos foram satisfeitos.
 
-Todos os requisitos propostos foram satisfeitos..
+<a name="tecnologias"></a>
+## Tecnologias Utilizadas
+
+### Solicitadas:
+- [x] Todas as respostas da API devem ser JSON  
+- [x] Banco de dados H2
+
+### Utilizadas
+* Java
+* Spring Boot
+* Git & GitHub
+* JUnit
+* ModelMapper
+
+### Diferenciais
+`Testes` - Tentei cobrir todos os métodos solicitados com testes unitários;
+`Clean Code` - Tentei ao máximo deixar o código limpo e organizado, e optei por fazê-lo em inglês para treinar;
+
+<a name="conclusao"></a>
+## Conclusão
+
+Tendo em vista o meu tempo disponível durante a semana, tentei realizar a avaliação em tempo hábil cumprindo ao máximo todos os requisitos solicitados pela empresa.
+Agradeço pela oportunidade de poder particiar deste processo seletivo da empresa Attornatus Procuradoria Digital para a vaga de Java Junior Back-End.
+
+Desejem-me sorte!
