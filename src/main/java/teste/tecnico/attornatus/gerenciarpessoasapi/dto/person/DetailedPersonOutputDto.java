@@ -1,5 +1,6 @@
 package teste.tecnico.attornatus.gerenciarpessoasapi.dto.person;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import lombok.AllArgsConstructor;
@@ -15,4 +16,9 @@ import teste.tecnico.attornatus.gerenciarpessoasapi.model.Address;
 public class DetailedPersonOutputDto extends PersonOutputDto{
 
 	private List<Address> addresses;
+	
+	public DetailedPersonOutputDto(Long id, String name, LocalDate birthDate, List<Address> addresses) {
+		super(id, name, birthDate);
+		this.addresses = addresses;
+	}
 }
