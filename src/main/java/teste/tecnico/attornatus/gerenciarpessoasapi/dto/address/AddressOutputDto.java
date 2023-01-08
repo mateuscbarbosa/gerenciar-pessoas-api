@@ -12,8 +12,8 @@ import lombok.Setter;
 public class AddressOutputDto {
 
 	private Long id;
-	private String publicPlace;
 	private String zipCode;
+	private String publicPlace;
 	private Integer number;
 	private String city;
 	private Boolean mainAddress;

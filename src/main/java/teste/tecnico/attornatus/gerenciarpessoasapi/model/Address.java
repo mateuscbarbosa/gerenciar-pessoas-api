@@ -23,8 +23,8 @@ public class Address {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	private String publicPlace;
 	private String zipCode;
+	private String publicPlace;
 	private Integer number;
 	private String city;
 	private Boolean mainAddress;
@@ -32,4 +32,15 @@ public class Address {
 	@ManyToOne
 	@JoinColumn(name = "person_id")
 	private Person person;
+
+	public Address(String zipCode, String publicPlace, Integer number, String city, Boolean mainAddress,
+			Person person) {
+		this.zipCode = zipCode;
+		this.publicPlace = publicPlace;
+		this.number = number;
+		this.city = city;
+		this.mainAddress = mainAddress;
+		this.person = person;
+	}
+	
 }
