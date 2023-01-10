@@ -49,6 +49,7 @@ Todos os requisitos propostos foram satisfeitos.
 * Git & GitHub
 * JUnit
 * ModelMapper
+* Lombok
 
 ### Diferenciais
 `Testes` - Tentei cobrir todos os métodos solicitados com testes unitários;
